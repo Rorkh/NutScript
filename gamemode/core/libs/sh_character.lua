@@ -114,7 +114,7 @@ do
 			end
 
 			-- Check whether the chosen character name already exists
-			if (not nut.config.get("allowExistNames", true)) then
+			if (not allowExistNames) then
 				for k, v in pairs(nut.char.names) do
 					if (v == value) then
 						return false, "A character with this name already exists."
@@ -212,10 +212,9 @@ do
 					icon.DoClick = function(this)
 						panel.payload.model = k
 					end
+					local color = nut.config.get("color", color_white)
 					icon.PaintOver = function(this, w, h)
 						if (panel.payload.model == k) then
-							local color = nut.config.get("color", color_white)
-
 							surface.SetDrawColor(color.r, color.g, color.b, 200)
 
 							for i = 1, 3 do
@@ -381,13 +380,14 @@ do
 			data[key] = value
 
 			if (not noReplication and IsValid(client)) then
+				local client_char = client:GetChar()
 				local id
 
 				if (
-					client:getChar() and
-					client:getChar():getID() == character:getID()
+					client_char and
+					client_char:getID() == character:getID()
 				) then
-					id = client:getChar():getID()
+					id = client_char:getID()
 				else
 					id = character:getID()
 				end
