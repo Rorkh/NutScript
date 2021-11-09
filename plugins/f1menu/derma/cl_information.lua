@@ -92,7 +92,9 @@ local PANEL = {}
 	end
 
 	function PANEL:setup()
-		local char = LocalPlayer():getChar()
+		local localPlayer = LocalPlayer()
+		local char = localPlayer:getChar()
+	
 		if (self.desc) then
 			self.desc:SetText(char:getDesc():gsub("#", "\226\128\139#"))
 			self.desc.OnEnter = function(this, w, h)
@@ -104,7 +106,7 @@ local PANEL = {}
 		end
 
 		if (self.name) then
-			self.name:SetText(LocalPlayer():Name():gsub("#", "\226\128\139#"))
+			self.name:SetText(localPlayer:Name():gsub("#", "\226\128\139#"))
 			hook.Add(
 				"OnCharVarChanged",
 				self,
@@ -145,18 +147,18 @@ local PANEL = {}
 		end
 
 		if (self.model) then
-			self.model:SetModel(LocalPlayer():GetModel())
-			self.model.Entity:SetSkin(LocalPlayer():GetSkin())
+			self.model:SetModel(localPlayer:GetModel())
+			self.model.Entity:SetSkin(localPlayer:GetSkin())
 
-			for k, v in ipairs(LocalPlayer():GetBodyGroups()) do
-				self.model.Entity:SetBodygroup(v.id, LocalPlayer():GetBodygroup(v.id))
+			for k, v in ipairs(localPlayer:GetBodyGroups()) do
+				self.model.Entity:SetBodygroup(v.id, localPlayer:GetBodygroup(v.id))
 			end
 
 			local ent = self.model.Entity
 			if (ent and IsValid(ent)) then
-				local mats = LocalPlayer():GetMaterials()
+				local mats = localPlayer:GetMaterials()
 				for k, v in pairs(mats) do
-					ent:SetSubMaterial(k - 1, LocalPlayer():GetSubMaterial(k - 1))
+					ent:SetSubMaterial(k - 1, localPlayer:GetSubMaterial(k - 1))
 				end
 			end
 		end
