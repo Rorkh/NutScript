@@ -101,24 +101,25 @@
 hook.Add("BuildHelpMenu", "nutBasicHelp", function(tabs)
 	tabs["commands"] = function(node)
 		local body = ""
+		local localPlayer = LocalPlayer()
 
 		for k, v in SortedPairs(nut.command.list) do
 			local allowed = false
 
-			if (v.adminOnly and not LocalPlayer():IsAdmin()or v.superAdminOnly and not LocalPlayer():IsSuperAdmin()) then
+			if (v.adminOnly and not localPlayer:IsAdmin()or v.superAdminOnly and not localPlayer:IsSuperAdmin()) then
 				continue
 			end
 
 			if (v.group) then
 				if (istable(v.group)) then
 					for _, v1 in pairs(v.group) do
-						if (LocalPlayer():IsUserGroup(v1)) then
+						if (localPlayer:IsUserGroup(v1)) then
 							allowed = true
 
 							break
 						end
 					end
-				elseif (LocalPlayer():IsUserGroup(v.group)) then
+				elseif (localPlayer:IsUserGroup(v.group)) then
 					return true
 				end
 			else
@@ -135,11 +136,12 @@ hook.Add("BuildHelpMenu", "nutBasicHelp", function(tabs)
 
 	tabs["flags"] = function(node)
 		local body = [[<table border="0" cellspacing="8px">]]
+		local char = LocalPlayer():getChar()
 
 		for k, v in SortedPairs(nut.flag.list) do
 			local icon
 
-			if (LocalPlayer():getChar():hasFlags(k)) then
+			if (char:hasFlags(k)) then
 				icon = [[<img src="asset://garrysmod/materials/icon16/tick.png" />]]
 			else
 				icon = [[<img src="asset://garrysmod/materials/icon16/cross.png" />]]
