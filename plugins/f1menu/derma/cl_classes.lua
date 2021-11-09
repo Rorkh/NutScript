@@ -85,8 +85,10 @@ local PANEL = {}
 
             self.icon:SetModel(model)
         else
-            local char = LocalPlayer():getChar()
-            local model = LocalPlayer():GetModel()
+			local localPlayer = LocalPlayer()
+		
+            local char = localPlayer:getChar()
+            local model = localPlayer:GetModel()
 
             if (char) then
                 model = char:getModel()
@@ -121,9 +123,11 @@ PANEL = {}
 
     function PANEL:loadClasses()
         self.list:Clear()
+	
+		local localPlayer = LocalPlayer()
         
         for k, v in ipairs(nut.class.list) do
-            local no, why = nut.class.canBe(LocalPlayer(), k)
+            local no, why = nut.class.canBe(localPlayer, k)
             local itsFull = ("class is full" == why)
 
             if (no or itsFull) then
@@ -141,9 +145,10 @@ hook.Add("CreateMenuButtons", "nutClasses", function(tabs)
     local cnt = table.Count(nut.class.list)
 
     if (cnt <= 1) then return end
+	local localPlayer = LocalPlayer()
 
     for k, v in ipairs(nut.class.list) do
-        if (!nut.class.canBe(LocalPlayer(), k)) then
+        if (!nut.class.canBe(localPlayer, k)) then
             continue
         else
             tabs["classes"] = function(panel)
