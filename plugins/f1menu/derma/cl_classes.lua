@@ -85,7 +85,7 @@ local PANEL = {}
 
             self.icon:SetModel(model)
         else
-			local localPlayer = LocalPlayer()
+						local localPlayer = LocalPlayer()
 		
             local char = localPlayer:getChar()
             local model = localPlayer:GetModel()
@@ -124,7 +124,7 @@ PANEL = {}
     function PANEL:loadClasses()
         self.list:Clear()
 	
-		local localPlayer = LocalPlayer()
+				local localPlayer = LocalPlayer()
         
         for k, v in ipairs(nut.class.list) do
             local no, why = nut.class.canBe(localPlayer, k)
@@ -144,8 +144,8 @@ vgui.Register("nutClasses", PANEL, "EditablePanel")
 hook.Add("CreateMenuButtons", "nutClasses", function(tabs)
     local cnt = table.Count(nut.class.list)
 
-    if (cnt <= 1) then return end
-	local localPlayer = LocalPlayer()
+		if (cnt <= 1) then return end
+		local localPlayer = LocalPlayer()
 
     for k, v in ipairs(nut.class.list) do
         if (!nut.class.canBe(localPlayer, k)) then
