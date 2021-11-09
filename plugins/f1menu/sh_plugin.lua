@@ -20,8 +20,9 @@ end
 
 function PLUGIN:OnCharInfoSetup(infoPanel)
 	-- Get the model entity from the F1 menu.
-	if (not IsValid(infoPanel.model)) then return end
 	local mdl = infoPanel.model
+	if (not IsValid(mdl)) then return end
+	
 	local ent = mdl.Entity
 	local client = LocalPlayer()
 
